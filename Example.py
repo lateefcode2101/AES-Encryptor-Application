@@ -1,18 +1,8 @@
-def Encrypt(filename, key):
-    file = open(filename, "rb")
-    data = file.read()
-    file.close()
+import tkinter.filedialog as fd
+from tkinter import *
 
-    data = bytearray(data)
-    for index, value in enumerate(data):
-        data[index] = value ^ key
-
-    file = open("CC-" + filename, "wb")
-    file.write(data)
-    file.close()
-
-
-def Decrypt(filename, key):
+key = 100
+def Encrypt():
     file = open(filename, "rb")
     data = file.read()
     file.close()
@@ -26,17 +16,46 @@ def Decrypt(filename, key):
     file.close()
 
 
-choice = ""
-while choice != "3":
-    print("Please select you option.")
-    print("1. Encrypt File")
-    print("2. Decrypt File")
-    print("3. Quit")
-    choice = input()
-    if choice == "1" or choice == "2":
-        key = int(input("Enter a key as int!\n"))
-        filename = input("Enter filename with extension:\n")
-    if choice == "1":
-        Encrypt(filename, key)
-    if choice == "2":
-        Decrypt(filename, key)
+def Decrypt():
+    file = open(filename, "rb")
+    data = file.read()
+    file.close()
+
+    data = bytearray(data)
+    for index, value in enumerate(data):
+        data[index] = value ^ key
+
+    file = open(filename, "wb")
+    file.write(data)
+    file.close()
+
+
+def select():
+    global filename
+    filename = fd.askopenfilename()
+    label1.config(text=filename)
+
+# --------------- 1. function ends
+
+
+# -------------2. Tkinter code start
+root = Tk()
+root.geometry('300x300')
+root.title("Cryptography")
+label = Label(root, text="Select file to encrypt or decrypt")
+selectfile = Button(root, text="Select a file", command=select)
+label1 = Label(root, text="No file selected")
+
+button_enc = Button(root, text="Encrypt/Decrypt", command=Encrypt)
+
+label2 = Label(root, text="-")
+
+label.pack()
+label1.pack()
+label2.pack()
+selectfile.pack()
+button_enc.pack()
+
+root.mainloop()
+
+# ------------------------Tkinter code ends
