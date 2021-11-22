@@ -2,6 +2,8 @@ import tkinter.filedialog as fd
 from tkinter import *
 
 key = 100
+
+# ---------------- 1. Functions start
 def Encrypt():
     file = open(filename, "rb")
     data = file.read()
